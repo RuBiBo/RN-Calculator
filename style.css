@@ -1,0 +1,19 @@
+body { 
+   background-color: #FAFAFA;
+   font-family: Verdana;
+}
+
+.inbox {
+   background-color: #FAFAFA;
+   font-family: Verdana;
+   padding: 5px;
+   border: none;
+   border-bottom: solid 2px #c9c9c9;
+   transition: border 0.3s;
+}
+input.inbox {
+   width: 8em;
+}
+.result1 {
+   vertical-align: top;
+}

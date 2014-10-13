@@ -1,0 +1,177 @@
+<html>
+    <head>
+	<title>RN cnc (Nightly v0.0.0.2)</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="jquery-min.js"></script>
+	<script type="text/javascript">
+            function calcCurrentConsumption (before, after) {
+                return parseInt(before) - parseInt(after);
+            }
+            function calcGoal (consumption, goal) {
+                return parseInt(consumption) + parseInt(goal);
+            }
+            function calcResult (before, goal) {
+                return parseInt(before) - parseInt(goal);
+            }
+            
+            function getBefore(rank) {
+                return $('#b'+rank).val();
+            }
+            function getAfter(rank) {
+                return $('#a'+rank).val();
+            }
+            function getCCC(rank) {
+                return calcCurrentConsumption(getBefore(rank),getAfter(rank));
+            }
+            function getGoal() {
+                return $('#goal').val();
+            }
+            
+            function setResults(rank,result, consumption) {
+		if (consumption != 0) {
+		    //if (consumption > $('#consumption').html()) {
+			//code
+		    //}
+		    $('#consumption'+rank).html(consumption);
+		    $('#magicgoal'+rank).html(parseInt(consumption)+parseInt(getGoal()));
+		}
+                $('#result'+rank).html(result);
+            }
+            
+            function maniTable () {
+                $('#calc').click(function(){
+                    var g = getGoal();
+                    var cCC = 0;
+                    var result = 0;
+                    var data = new Array();
+                    
+                    for(var i=1;i<5;i++) {
+			var test = getBefore(i);
+			if (test != '0' && test != null) {
+			    cCC = getCCC(i);
+			}
+                        result = calcResult(getAfter(i),g);
+                        setResults(i,result,cCC);
+                        data.push(result);
+			cCC = 0;
+                    }
+                    appendTrend(data);
+                });
+            }
+            function appendTrend (data) {
+                var x = 0;
+                for(var i = 0;i<4;i++) {
+                    x = i+1;
+                    $('#trend'+x).append("<td>"+data[i]+"</td>");
+                }
+            }
+            function bindNameChanger () {
+                for(var i=1;i<5;i++) {
+                    $('#name'+i).bind('change paste keyup[:enter]',{x:i} ,function (event) {
+                        $('#product'+event.data.x).html($('#name'+event.data.x).val());
+                    });
+                }
+            }
+	    $(document).ready(function() {
+                maniTable();
+                bindNameChanger();
+            });
+	</script>
+	    
+    </head>
+    <body>
+	<div><h5>Rail Nation city need calculator (Nightly build version: 0.0.0.2)</h5></div>
+	<div id="area_input">
+	    <table id="struct">
+		<tr>
+		    <td>
+			<table id="table_input1">
+		<tr>
+		    <td>name</td>
+		    <td>befor</td>
+		    <td>after</td>
+		</tr>
+		<tr>
+		    <td><input class="inbox" id="name1" type="text" value="Unnamend"/></td>
+		    <td><input class="inbox" id="b1" type="number" value="0"/></td>
+		    <td><input class="inbox" id="a1" type="number" value="0"/></td>
+		</tr>
+		<tr>
+		    <td><input class="inbox" id="name2" type="text" value="Unnamend"/></td>
+		    <td><input class="inbox" id="b2" type="number" value="0"/></td>
+		    <td><input class="inbox" id="a2" type="number" value="0"/></td>
+		</tr>
+		<tr>
+		    <td><input class="inbox" id="name3" type="text" value="Unnamend"/></td>
+		    <td><input class="inbox" id="b3" type="number" value="0"/></td>
+		    <td><input class="inbox" id="a3" type="number" value="0"/></td>
+		</tr>
+		<tr>
+		    <td><input class="inbox" id="name4" type="text" value="Unnamend"/></td>
+		    <td><input class="inbox" id="b4" type="number" value="0"/></td>
+		    <td><input class="inbox" id="a4" type="number" value="0"/></td>
+		</tr>
+		<tr>
+		    <td>&nbsp;</td>
+		    <td>City goal</td>
+		    <td><input class="inbox" id="goal" type="number" value="0"/></td>
+		</tr>
+		 <tr>
+		    <td>&nbsp;</td>
+		    <td>&nbsp</td>
+		    <td><input class="button" id="calc" type="button" value="Calculate"/></td>
+		</tr>
+	    </table>
+		    </td>
+		    <td class="result1">
+			 <table id="table_result1" class="result1">
+		<tr>
+		    <td id="result_head">Result</td>
+		    <td id="consumption_head">Consumption</td>
+		    <td id="magicgoal_head">Magic goal</td>
+		</tr>
+		<tr>
+		    <td id="result1" class="inbox">&nbsp;</td>
+		    <td id="consumption1" class="inbox">&nbsp;</td>
+		    <td id="magicgoal1" class="inbox">&nbsp;</td>
+		</tr>
+		<tr>
+		    <td id="result2" class="inbox">&nbsp;</td>
+		    <td id="consumption2" class="inbox">&nbsp;</td>
+		    <td id="magicgoal2" class="inbox">&nbsp;</td>
+		</tr>
+		<tr>
+		    <td id="result3" class="inbox">&nbsp;</td>
+		    <td id="consumption3" class="inbox">&nbsp;</td>
+		    <td id="magicgoal3" class="inbox">&nbsp;</td>
+		</tr>
+		<tr>
+		     <td id="result4" class="inbox">&nbsp;</td>
+		     <td id="consumption4" class="inbox">&nbsp;</td>
+		     <td id="magicgoal4" class="inbox">&nbsp;</td>
+		</tr>
+		
+	    </table>
+		    </td>
+		</tr>
+	    </table>
+	</div>
+	<div id="area_trend">
+            <h6>Trend table</h6>
+            <table id="table_trend">
+                <tr id="trend1">
+                    <td id="product1">unkown</td>
+                </tr>
+                <tr id="trend2">
+                    <td id="product2">unkown</td>
+                </tr>
+                <tr id="trend3">
+                    <td id="product3">unkown</td>
+                </tr>
+                <tr id="trend4">
+                    <td id="product4">unkown</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
