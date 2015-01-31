@@ -4,6 +4,44 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="jquery-min.js"></script>
 	<script type="text/javascript">
+	    function MyManipulation () {
+		//var that = this;
+		this.table = new function() {
+		    //var that = this;
+		    this.setBeforeNull = new function() {
+			for (var i=1;i<5;i++) {
+			    $('#b'+i).val("0");
+			}
+		    }
+		    this.setResults = new function(rank,result) {
+			$('#result'+rank).html(result);
+		    }
+		    this.setConsumption = new function(rank,consumption) {
+			$('#consumption'+rank).html(consumption);
+		    }
+		    this.setMagicGoal = new function(rank,goal) {
+			$('#magicgoal'+rank).html(goal);
+		    }
+		}
+	    }
+	    
+	    function KACKE () {
+		var that = this;
+		this.load = new function () {
+		    var that = this;
+		    this.goal = new function () {
+			var value = $('#goal').val();
+			return value;
+		    }
+		    this.before = new function (rank) {
+			return parseInt($('#b'+rank).val());
+		    }
+		    this.after = new function (rank) {
+			return parseInt($('#a'+rank).val());
+		    }
+		}
+	    }
+	    
             function calcCurrentConsumption (before, after) {
                 return parseInt(before) - parseInt(after);
             }
@@ -28,6 +66,7 @@
             }
             
             function setResults(rank,result, consumption) {
+		
 		if (consumption != 0) {
 		    //if (consumption > $('#consumption').html()) {
 			//code
@@ -40,6 +79,8 @@
             
             function maniTable () {
                 $('#calc').click(function(){
+		    //var manipu = new MyManipulation();
+		    
                     var g = getGoal();
                     var cCC = 0;
                     var result = 0;
@@ -56,6 +97,8 @@
 			cCC = 0;
                     }
                     appendTrend(data);
+		    
+		    //manipu.table.setBeforeNull();
                 });
             }
             function appendTrend (data) {
@@ -160,16 +203,16 @@
             <h6>Trend table</h6>
             <table id="table_trend">
                 <tr id="trend1">
-                    <td id="product1">unkown</td>
+                    <td id="product1">unknown</td>
                 </tr>
                 <tr id="trend2">
-                    <td id="product2">unkown</td>
+                    <td id="product2">unknown</td>
                 </tr>
                 <tr id="trend3">
-                    <td id="product3">unkown</td>
+                    <td id="product3">unknown</td>
                 </tr>
                 <tr id="trend4">
-                    <td id="product4">unkown</td>
+                    <td id="product4">unknown</td>
                 </tr>
             </table>
         </div>
